@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Options Interface</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #E8E8E8 0%, #F5F5F5 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .mobile-container {
+            width: 350px;
+            height: 700px;
+            background: linear-gradient(180deg, #2D1B69 0%, #1A0E40 50%, #0F0725 100%);
+            border-radius: 35px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.4),
+                0 0 0 8px rgba(255, 255, 255, 0.1),
+                inset 0 2px 0 rgba(255, 255, 255, 0.1);
+            animation: slideInUp 1s ease-out;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(100px) scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Decorative Background Elements */
+        .decorative-circle {
+            position: absolute;
+            background: linear-gradient(135deg, #E91E63, #C2185B);
+            border-radius: 50%;
+            animation: floatBackground 8s ease-in-out infinite;
+        }
+
+        .circle-top-left {
+            width: 120px;
+            height: 120px;
+            top: -60px;
+            left: -60px;
+            opacity: 0.9;
+        }
+
+        .circle-top-right {
+            width: 80px;
+            height: 80px;
+            top: 50px;
+            right: -40px;
+            opacity: 0.6;
+            animation-delay: 2s;
+        }
+
+        .circle-middle {
+            width: 60px;
+            height: 60px;
+            top: 40%;
+            left: -30px;
+            opacity: 0.5;
+            animation-delay: 4s;
+        }
+
+        .circle-bottom {
+            width: 100px;
+            height: 100px;
+            bottom: 150px;
+            right: -50px;
+            opacity: 0.4;
+            animation-delay: 6s;
+        }
+
+        @keyframes floatBackground {
+            0%, 100% { transform: translateY(0px) translateX(0px) rotate(0deg); }
+            25% { transform: translateY(-15px) translateX(10px) rotate(90deg); }
+            50% { transform: translateY(-10px) translateX(-10px) rotate(180deg); }
+            75% { transform: translateY(5px) translateX(15px) rotate(270deg); }
+        }
+
+        /* Main Content */
+        .content-wrapper {
+            height: calc(100% - 80px);
+            display: flex;
+            flex-direction: column;
+            padding: 60px 40px 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Geometric Visual Section */
+        .visual-section {
+            flex: 0 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 40px;
+            animation: fadeInScale 1s ease-out 0.3s both;
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.7) translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .geometric-container {
+            width: 240px;
+            height: 180px;
+            background: linear-gradient(145deg, #E91E63, #AD1457);
+            border-radius: 25px;
+            position: relative;
+            margin-bottom: 50px;
+            box-shadow: 
+                0 25px 50px rgba(233, 30, 99, 0.4),
+                inset 0 3px 0 rgba(255, 255, 255, 0.2),
+                inset 0 -3px 0 rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .geometric-container:hover {
+            transform: translateY(-10px) rotateX(5deg) rotateY(-5deg);
+            box-shadow: 
+                0 35px 70px rgba(233, 30, 99, 0.5),
+                inset 0 3px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        .geometric-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.4),
+                transparent
+            );
+            transition: left 0.6s;
+            animation: shimmer 4s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { left: -100%; }
+            50% { left: 100%; }
+        }
+
+        /* Mountain Shapes */
+        .mountains-container {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            height: 90px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+        }
+
+        .mountain {
+            position: relative;
+            margin: 0 -5px;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+        }
+
+        .mountain-1 {
+            width: 0;
+            height: 0;
+            border-left: 50px solid transparent;
+            border-right: 50px solid transparent;
+            border-bottom: 80px solid #2D1B69;
+            z-index: 4;
+            animation: mountainRise 1s ease-out 0.8s both;
+        }
+
+        .mountain-2 {
+            width: 0;
+            height: 0;
+            border-left: 40px solid transparent;
+            border-right: 40px solid transparent;
+            border-bottom: 65px solid #1A0E40;
+            z-index: 3;
+            opacity: 0.9;
+            animation: mountainRise 1s ease-out 1s both;
+        }
+
+        .mountain-3 {
+            width: 0;
+            height: 0;
+            border-left: 30px solid transparent;
+            border-right: 30px solid transparent;
+            border-bottom: 50px solid #0F0725;
+            z-index: 2;
+            opacity: 0.7;
+            animation: mountainRise 1s ease-out 1.2s both;
+        }
+
+        @keyframes mountainRise {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.8);
+            }
+            to {
+                opacity: inherit;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Pagination Dots */
+        .pagination-section {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 50px;
+            animation: fadeIn 1s ease-out 0.6s both;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .pagination-dots {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .dot::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.3s ease;
+        }
+
+        .dot:hover::before {
+            width: 20px;
+            height: 20px;
+        }
+
+        .dot.active {
+            background: #E91E63;
+            width: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(233, 30, 99, 0.5);
+        }
+
+        .dot:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.6);
+            transform: scale(1.3);
+        }
+
+        /* Options Section */
+        .options-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            animation: slideInLeft 1s ease-out 0.9s both;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .option-button {
+            background: linear-gradient(135deg, #E91E63, #C2185B);
+            color: white;
+            padding: 20px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 
+                0 8px 25px rgba(233, 30, 99, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            transform: translateX(0);
+            animation: optionSlide 0.6s ease-out both;
+        }
+
+        .option-button:nth-child(1) { animation-delay: 1.2s; }
+        .option-button:nth-child(2) { animation-delay: 1.4s; }
+        .option-button:nth-child(3) { animation-delay: 1.6s; }
+
+        @keyframes optionSlide {
+            from {
+                opacity: 0;
+                transform: translateX(-100px) rotateY(-90deg);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0) rotateY(0deg);
+            }
+        }
+
+        .option-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.3),
+                transparent
+            );
+            transition: left 0.6s ease;
+        }
+
+        .option-button:hover::before {
+            left: 100%;
+        }
+
+        .option-button:hover {
+            transform: translateX(15px) scale(1.02);
+            box-shadow: 
+                0 15px 40px rgba(233, 30, 99, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        .option-button:active {
+            transform: translateX(15px) scale(0.98);
+        }
+
+        /* Option Button Variants */
+        .option-button.option-02 {
+            background: linear-gradient(135deg, #8E24AA, #7B1FA2);
+            box-shadow: 
+                0 8px 25px rgba(142, 36, 170, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        .option-button.option-02:hover {
+            box-shadow: 
+                0 15px 40px rgba(142, 36, 170, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        .option-button.option-03 {
+            background: linear-gradient(135deg, #5E35B1, #512DA8);
+            box-shadow: 
+                0 8px 25px rgba(94, 53, 177, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        .option-button.option-03:hover {
+            box-shadow: 
+                0 15px 40px rgba(94, 53, 177, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        /* Button Icons */
+        .option-button i {
+            margin-right: 12px;
+            font-size: 18px;
+        }
+
+        /* Bottom Navigation */
+        .bottom-navigation {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: linear-gradient(180deg, #E91E63, #C2185B);
+            border-radius: 0 0 35px 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 
+                0 -10px 20px rgba(0, 0, 0, 0.2),
+                inset 0 2px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-home {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(15px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-home::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.4s ease;
+        }
+
+        .nav-home:hover::after {
+            width: 100px;
+            height: 100px;
+        }
+
+        .nav-home:hover {
+            background: rgba(255, 255, 255, 0.4);
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 15px 35px rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-home i {
+            color: white;
+            font-size: 24px;
+            z-index: 2;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .nav-home:hover i {
+            transform: scale(1.2);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            
+            .mobile-container {
+                width: 100%;
+                max-width: 320px;
+                height: 640px;
+            }
+            
+            .content-wrapper {
+                padding: 50px 30px 30px;
+            }
+            
+            .geometric-container {
+                width: 200px;
+                height: 150px;
+            }
+            
+            .option-button {
+                padding: 18px 25px;
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .mobile-container {
+                height: 600px;
+            }
+            
+            .content-wrapper {
+                padding: 40px 25px 25px;
+            }
+            
+            .geometric-container {
+                width: 180px;
+                height: 130px;
+            }
+            
+            .options-section {
+                gap: 15px;
+            }
+        }
+
+        /* Loading and Error States */
+        .loading {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        .loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            border: 2px solid transparent;
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            transform: translate(-50%, -50%);
+        }
+
+        @keyframes spin {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        /* Accessibility */
+        .option-button:focus,
+        .nav-home:focus,
+        .dot:focus {
+            outline: 2px solid rgba(255, 255, 255, 0.8);
+            outline-offset: 2px;
+        }
+
+        /* Reduced Motion Support */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="mobile-container">
+        <!-- Decorative Background -->
+        <div class="decorative-circle circle-top-left"></div>
+        <div class="decorative-circle circle-top-right"></div>
+        <div class="decorative-circle circle-middle"></div>
+        <div class="decorative-circle circle-bottom"></div>
+        
+        <div class="content-wrapper">
+            <!-- Geometric Visual Section -->
+            <section class="visual-section">
+                <div class="geometric-container" id="geometricShape">
+                    <div class="mountains-container">
+                        <div class="mountain mountain-3"></div>
+                        <div class="mountain mountain-2"></div>
+                        <div class="mountain mountain-1"></div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Pagination Section -->
+            <section class="pagination-section">
+                <div class="pagination-dots">
+                    <div class="dot" data-page="1"></div>
+                    <div class="dot" data-page="2"></div>
+                    <div class="dot active" data-page="3"></div>
+                    <div class="dot" data-page="4"></div>
+                    <div class="dot" data-page="5"></div>
+                </div>
+            </section>
+            
+            <!-- Options Section -->
+            <section class="options-section">
+                <button class="option-button" data-option="1">
+                    <i class="fas fa-star"></i>
+                    OPTION 01
+                </button>
+                <button class="option-button option-02" data-option="2">
+                    <i class="fas fa-heart"></i>
+                    OPTION 02
+                </button>
+                <button class="option-button option-03" data-option="3">
+                    <i class="fas fa-bolt"></i>
+                    OPTION 03
+                </button>
+            </section>
+        </div>
+        
+        <!-- Bottom Navigation -->
+        <nav class="bottom-navigation">
+            <button class="nav-home" id="homeBtn" aria-label="Go to home">
+                <i class="fas fa-home"></i>
+            </button>
+        </nav>
+    </div>
+
+    <script>
+        // DOM Elements
+        const homeBtn = document.getElementById('homeBtn');
+        const optionButtons = document.querySelectorAll('.option-button');
+        const dots = document.querySelectorAll('.dot');
+        const geometricShape = document.getElementById('geometricShape');
+        const mobileContainer = document.querySelector('.mobile-container');
+
+        // Option buttons functionality
+        optionButtons.forEach((button, index) => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Add loading state
+                this.classList.add('loading');
+                const originalText = this.innerHTML;
+                
+                setTimeout(() => {
+                    this.classList.remove('loading');
+                    
+                    // Success feedback
+                    const icon = this.querySelector('i');
+                    icon.className = 'fas fa-check';
+                    this.innerHTML = `<i class="fas fa-check"></i>SUCCESS!`;
+                    
+                    // Reset after delay
+                    setTimeout(() => {
+                        this.innerHTML = originalText;
+                    }, 2000);
+                    
+                }, 1500);
+                
+                console.log(`Option ${this.dataset.option} selected`);
+            });
+
+            // Hover sound effect (visual feedback)
+            button.addEventListener('mouseenter', function() {
+                this.style.filter = 'brightness(1.2) saturate(1.3)';
+            });
+
+            button.addEventListener('mouseleave', function() {
+                this.style.filter = 'brightness(1) saturate(1)';
+            });
+
+            // Keyboard support
+            button.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    this.click();
+                }
+            });
+        });
+
+        // Pagination dots functionality
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', function() {
+                // Remove active class from all dots
+                dots.forEach(d => d.classList.remove('active'));
+                
+                // Add active class to clicked dot
+                this.classList.add('active');
+                
+                // Page change animation
+                mobileContainer.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    mobileContainer.style.transform = 'scale(1)';
+                }, 200);
+                
+                console.log(`Page ${this.dataset.page} selected`);
+            });
+
+            // Keyboard support for dots
+            dot.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    this.click();
+                }
+            });
+        });
+
+        // Geometric shape interaction
+        geometricShape.addEventListener('click', function() {
+            this.style.transform = 'translateY(-10px) rotateX(15deg) rotateY(-15deg) scale(1.05)';
+            this.style.filter = 'hue-rotate(30deg) saturate(1.5)';
+            
+            setTimeout(() => {
+                this.style.transform = '';
+                this.style.filter = '';
+            }, 800);
+        });
+
+        // Home button functionality
+        homeBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Create ripple effect
+            const ripple = document.createElement('div');
+            ripple.style.cssText = `
+                position: absolute;
+                width: 120px;
+                height: 120px;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.6);
+                transform: scale(0);
+                animation: rippleExpand 0.6s ease-out;
+                pointer-events: none;
+                top: 50%;
+                left: 50%;
+                margin: -60px 0 0 -60px;
+            `;
+            
+            this.appendChild(ripple);
+            
+            // Navigation feedback
+            this.style.background = 'rgba(255, 255, 255, 0.6)';
+            
+            setTimeout(() => {
+                this.style.background = 'rgba(255, 255, 255, 0.2)';
+                if (ripple.parentNode) {
+                    ripple.parentNode.removeChild(ripple);
+                }
+            }, 600);
+            
+            console.log('Navigating to home...');
+        });
+
+        // Add ripple animation
+        const rippleStyle = document.createElement('style');
+        rippleStyle.textContent = `
+            @keyframes rippleExpand {
+                to {
+                    transform: scale(2);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(rippleStyle);
+
+        // Touch gestures
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let currentPage = 3; // Active page
+
+        mobileContainer.addEventListener('touchstart', function(e) {
+            touchStartX = e.changedTouches[0].screenX;
+            touchStartY = e.changedTouches[0].screenY;
+        });
+
+        mobileContainer.addEventListener('touchend', function(e) {
+            const touchEndX = e.changedTouches[0].screenX;
+            const touchEndY = e.changedTouches[0].screenY;
+            
+            const deltaX = touchEndX - touchStartX;
+            const deltaY = touchEndY - touchStartY;
+            
+            const minSwipeDistance = 50;
+            
+            // Horizontal swipe for pagination
+            if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > minSwipeDistance) {
+                if (deltaX > 0 && currentPage > 1) {
+                    // Swipe right - previous page
+                    currentPage--;
+                    updatePagination();
+                } else if (deltaX < 0 && currentPage < 5) {
+                    // Swipe left - next page
+                    currentPage++;
+                    updatePagination();
+                }
+            }
+            
+            // Vertical swipe
+            if (Math.abs(deltaY) > Math.abs(deltaX) && Math.abs(deltaY) > minSwipeDistance) {
+                if (deltaY > 0) {
+                    console.log('Swipe down - could show more options');
+                } else {
+                    console.log('Swipe up - could show details');
+                }
+            }
+        });
+
+        function updatePagination() {
+            dots.forEach((dot, index) => {
+                dot.classList.remove('active');
+                if (index + 1 === currentPage) {
+                    dot.classList.add('active');
+                }
+            });
+            
+            // Page transition effect
+            mobileContainer.style.transform = 'translateX(-20px)';
+            setTimeout(() => {
+                mobileContainer.style.transform = 'translateX(0)';
+            }, 150);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            switch(e.key) {
+                case 'ArrowLeft':
+                    if (currentPage > 1) {
+                        currentPage--;
+                        updatePagination();
+                    }
+                    break;
+                case 'ArrowRight':
+                    if (currentPage < 5) {
+                        currentPage++;
+                        updatePagination();
+                    }
+                    break;
+                case '1':
+                case '2':
+                case '3':
+                    const optionIndex = parseInt(e.key) - 1;
+                    if (optionButtons[optionIndex]) {
+                        optionButtons[optionIndex].click();
+                    }
+                    break;
+            }
+        });
+
+        // Auto-play demo (optional)
+        function startDemo() {
+            let demoStep = 0;
+            const demoSteps = [
+                () => geometricShape.click(),
+                () => dots[0].click(),
+                () => dots[4].click(),
+                () => optionButtons[0].click(),
+                () => optionButtons[1].click(),
+                () => optionButtons[2].click()
+            ];
+            
+            const demoInterval = setInterval(() => {
+                if (demoStep < demoSteps.length) {
+                    demoSteps[demoStep]();
+                    demoStep++;
+                } else {
+                    clearInterval(demoInterval);
+                }
+            }, 3000);
+        }
+
+        // Initialize app
+        window.addEventListener('load', function() {
+            console.log('Mobile Options Interface loaded successfully');
+            
+            // Optional: Start demo after 5 seconds
+            // setTimeout(startDemo, 5000);
+            
+            // Performance monitoring
+            const loadTime = performance.now();
+            console.log(`Interface loaded in ${loadTime.toFixed(2)}ms`);
+        });
+
+        // Error handling
+        window.addEventListener('error', function(e) {
+            console.error('Application error:', e.error);
+            
+            // Show user-friendly error
+            const errorNotification = document.createElement('div');
+            errorNotification.textContent = 'Something went wrong. Please try refreshing.';
+            errorNotification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: #f44336;
+                color: white;
+                padding: 15px 25px;
+                border-radius: 8px;
+                z-index: 9999;
+                font-size: 14px;
+                box-shadow: 0 4px 12px rgba(244, 67, 54, 0.3);
+                animation: slideInDown 0.3s ease-out;
+            `;
+            
+            document.body.appendChild(errorNotification);
+            
+            setTimeout(() => {
+                if (errorNotification.parentNode) {
+                    document.body.removeChild(errorNotification);
+                }
+            }, 5000);
+        });
+
+        // Add slide in animation for error
+        const errorStyle = document.createElement('style');
+        errorStyle.textContent = `
+            @keyframes slideInDown
